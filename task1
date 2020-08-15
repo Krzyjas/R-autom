@@ -23,8 +23,7 @@ class Front_end_test(unittest.TestCase):
         display = driver.find_element_by_xpath('/html/body/form/p[1]/label').text
         assert display == "Customer name:"
         input_field = driver.find_element_by_xpath('/html/body/form/p[1]/label/input')
-        input_field.is_enabled() #czy tak sie sprawdza wyswietlanie/dzialanie takiego pola ??? czy to powinno byc robione przez asercje???
-        #tez wpisac dane, ogolnie wszystko co sie da
+        input_field.is_enabled() 
 
         display = driver.find_element_by_xpath('/html/body/form/p[2]/label').text
         assert display == "Telephone:"
@@ -98,7 +97,6 @@ class Front_end_test(unittest.TestCase):
         assert display == "Preferred delivery time:"
 
         driver.find_element_by_xpath('/html/body/form/p[4]/label/input').send_keys('12:00')
-        #czy tak sie to testuje? jak sprawdzac te pola na stronie tj. godziny/minuty - osobno czy razem (nie udalo mi sie ich odesparowc poprzez 'zbadaj element')? jak sprawdzic ich 'poprawnosc' na stronie
 
         #DELIEVER INSTRUCTIONS
         display = driver.find_element_by_xpath('/html/body/form/p[5]/label').text
