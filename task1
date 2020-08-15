@@ -1,0 +1,119 @@
+import unittest
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+import requests
+import json
+
+class Front_end_test(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Firefox(executable_path="c:\gecko\geckodriver.exe")
+        self.wait = WebDriverWait(self.driver, 1)
+
+    def tearDown(self):
+        self.driver.close()
+
+    def test_task_one(self):
+        driver = self.driver
+        driver.get("https://httpbin.org/forms/post")
+
+        display = driver.find_element_by_xpath('/html/body/form/p[1]/label').text
+        assert display == "Customer name:"
+        input_field = driver.find_element_by_xpath('/html/body/form/p[1]/label/input')
+        input_field.is_enabled() #czy tak sie sprawdza wyswietlanie/dzialanie takiego pola ??? czy to powinno byc robione przez asercje???
+        #tez wpisac dane, ogolnie wszystko co sie da
+
+        display = driver.find_element_by_xpath('/html/body/form/p[2]/label').text
+        assert display == "Telephone:"
+
+        display = driver.find_element_by_xpath('/html/body/form/p[3]/label').text
+        assert display == "E-mail address:"
+
+        display = driver.find_element_by_xpath('/html/body/form/fieldset[1]/legend').text
+        assert display == "Pizza Size"
+
+        #PIZZA SIZE
+        button = driver.find_element_by_xpath('/html/body/form/fieldset[1]/p[1]/label/input')
+        print("Button 'Small' is displayed: {}".format(str(button.is_displayed())))
+        button.click()
+        button.is_selected()
+        display = driver.find_element_by_xpath('/html/body/form/fieldset[1]/p[1]/label').text
+        assert display == "Small"
+
+        button = driver.find_element_by_xpath('/html/body/form/fieldset[1]/p[2]/label/input')
+        print("Button 'Medium' is displayed: {}".format(str(button.is_displayed())))
+        button.click()
+        button.is_selected()
+        display = driver.find_element_by_xpath('/html/body/form/fieldset[1]/p[2]/label').text
+        assert display == "Medium"
+
+        button = driver.find_element_by_xpath('/html/body/form/fieldset[1]/p[3]/label/input')
+        print("Button 'Large' is displayed: {}".format(str(button.is_displayed())))
+        button.click()
+        button.is_selected()
+        display = driver.find_element_by_xpath('/html/body/form/fieldset[1]/p[3]/label').text
+        assert display == "Large"
+
+        #PIZZA TOPPINGS
+        display = driver.find_element_by_xpath('/ html / body / form / fieldset[2] / legend').text
+        assert display == "Pizza Toppings"
+
+        checkbox = driver.find_element_by_xpath('/html/body/form/fieldset[2]/p[1]/label/input')
+        checkbox.is_displayed()
+        checkbox.click()
+        checkbox.is_selected()
+
+        checkbox_text = driver.find_element_by_xpath('/html/body/form/fieldset[2]/p[1]/label').text
+        assert checkbox_text == "Bacon"
+
+        checkbox = driver.find_element_by_xpath('/html/body/form/fieldset[2]/p[2]/label/input')
+        checkbox.is_displayed()
+        checkbox.click()
+        checkbox.is_selected()
+
+        checkbox_text = driver.find_element_by_xpath('/html/body/form/fieldset[2]/p[2]/label').text
+        assert checkbox_text == "Extra Cheese"
+
+        checkbox = driver.find_element_by_xpath('/html/body/form/fieldset[2]/p[3]/label/input')
+        checkbox.is_displayed()
+        checkbox.click()
+        checkbox.is_selected()
+
+        checkbox_text = driver.find_element_by_xpath('/html/body/form/fieldset[2]/p[3]/label').text
+        assert checkbox_text == "Onion"
+
+        checkbox = driver.find_element_by_xpath('/html/body/form/fieldset[2]/p[4]/label/input')
+        checkbox.is_displayed()
+        checkbox.click()
+        checkbox.is_selected()
+
+        checkbox_text = driver.find_element_by_xpath('/html/body/form/fieldset[2]/p[4]/label').text
+        assert checkbox_text == "Mushroom"
+
+        #DELIEVER TIME
+        display = driver.find_element_by_xpath('/ html / body / form / p[4] / label').text
+        assert display == "Preferred delivery time:"
+
+        driver.find_element_by_xpath('/html/body/form/p[4]/label/input').send_keys('12:00')
+        #czy tak sie to testuje? jak sprawdzac te pola na stronie tj. godziny/minuty - osobno czy razem (nie udalo mi sie ich odesparowc poprzez 'zbadaj element')? jak sprawdzic ich 'poprawnosc' na stronie
+
+        #DELIEVER INSTRUCTIONS
+        display = driver.find_element_by_xpath('/html/body/form/p[5]/label').text
+        assert  display == "Delivery instructions:"
+
+        text_area = driver.find_element_by_xpath('/html/body/form/p[5]/label/textarea')
+        text_area.is_displayed()
+
+        #SUBMIT
+        submit = driver.find_element_by_xpath('/html/body/form/p[6]/button')
+        submit.click()
+
+        wait = WebDriverWait(driver, 3)
+
+
+
+if __name__ == "__main__":
+    unittest.main()
