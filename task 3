@@ -1,0 +1,19 @@
+import requests
+
+payload = {'comments':'example_comments', 'custname':'example_custname'}
+r = requests.post('http://httpbin.org/post', data = payload)
+
+if r.status_code == requests.codes.ok:
+    assert r.status_code == requests.codes.ok # '.ok' - confirms only 200 code
+    print("STATUS CODE IS: {}".format(r.status_code))
+else:
+    print("STATUS CODE IS NOT 200. IS:{}".format(r.status_code))
+
+print(r.text)
+content = r.json() #transfering answer to dictionary
+
+if content['form'] == payload: # content['form'] accesing key of dictionary 'content'
+    assert content['form'] == payload
+    print(str(content['form']) +" IS SAME AS " + str(payload) +'\n' + 'Data properly posted!')
+else:
+    print(str(content['form']) + " IS NOT THE SAME AS " + str(payload))
