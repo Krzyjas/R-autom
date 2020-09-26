@@ -1,3 +1,6 @@
+# Is NOT typical form of test - I want to make it to run no matter of assertion errors
+# reporting by prints effects of test. It is just kinda version of mine. 
+
 import requests
 
 payload = {'comments':'example_comments', 'custname':'example_custname'}
